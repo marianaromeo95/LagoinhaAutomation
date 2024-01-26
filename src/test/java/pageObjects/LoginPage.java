@@ -20,7 +20,9 @@ public class LoginPage {
     @FindBy(name = "password")
     public WebElement passwordInput;
     @FindBy(xpath = "//button[contains(text(),'Login')]")
-    public WebElement loginButton;
+    public WebElement loginBtn;
+    @FindBy(id = "password-icon")
+    public WebElement toggleIcon;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -37,10 +39,16 @@ public class LoginPage {
         passwordInput.sendKeys(password);
     }
 
-    public void loginButtonClick() {
-        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
-        loginButton.click();
+    public void clickLoginButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(loginBtn));
+        loginBtn.click();
     }
+
+    public void clickToggleIcon() {
+        toggleIcon.click();
+    }
+
+
 
 
 }

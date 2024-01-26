@@ -9,7 +9,7 @@ import io.cucumber.junit.Cucumber;
 @CucumberOptions(
         features = "src//test//resources//features",
         glue = "stepsDefinitions",
-        tags = "",
+        tags = "@passwordIcon",
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         dryRun = false
 )
