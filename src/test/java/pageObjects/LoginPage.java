@@ -6,11 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import static utils.Utils.*;
 import java.time.Duration;
 
 
-public class LoginPage {
+public class LoginPage extends HomePage {
 
     public WebDriver driver;
     WebDriverWait wait;
@@ -25,9 +25,10 @@ public class LoginPage {
     public WebElement toggleIcon;
 
     public LoginPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        this.wait =  new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
+        this.wait =  new WebDriverWait(driver, Duration.ofSeconds(60));
     }
 
     public void enterEmail(String email) {
@@ -42,10 +43,18 @@ public class LoginPage {
     public void clickLoginButton() {
         wait.until(ExpectedConditions.elementToBeClickable(loginBtn));
         loginBtn.click();
+
     }
 
     public void clickToggleIcon() {
         toggleIcon.click();
+    }
+
+    public void login(String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        clickLoginButton();
+        wait.until(ExpectedConditions.visibilityOf(createEventBtn));
     }
 
 

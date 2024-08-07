@@ -1,9 +1,13 @@
 package stepsDefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.HomePage;
+import pageObjects.LoginPage;
 import static utils.Utils.*;
 import java.time.Duration;
 
@@ -11,95 +15,89 @@ public class EventSteps {
 
     WebDriverWait wait =  new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    @Given("^the user is authenticated and on the event management page$")
-    public void theUserIsAuthenticatedAndOnTheEventManagementPage() {
-        // Implementation code
-    }
-
     @When("^the user clicks on the create event button$")
     public void theUserClicksOnTheCreateEventButton() {
-
+        At(HomePage.class).clickCreateEventButton();
     }
 
-    @When("^inputs the title (.+)$")
+    @When("^inputs the title \"?([^\\\"]*)\"?$")
     public void inputsTheTitle(String title) {
-
+        At(HomePage.class).inputEventTitle(title);
     }
 
     @When("^clicks on the register button$")
     public void clicksOnTheRegisterButton() {
-
+        At(HomePage.class).clickSubmitButton();
     }
 
-    @Then("^the event (.+) should be successfully created$")
-    public void theEventShouldBeSuccessfullyCreated(String title) {
-
+    @Then("^the event should be successfully created and deleted afterwards$")
+    public void theEventShouldBeSuccessfullyCreatedAndDeletedAfterwards() {
+        Assert.assertTrue(At(HomePage.class).isEventDisplayed("Legacy Experience"));
+        boolean isDeletedEvent = At(HomePage.class).deleteEvent("Legacy Experience");
+        Assert.assertTrue(isDeletedEvent);
     }
 
-    @Given("^an event (.+) exists$")
-    public void anEventExists(String title) {
-        // Code to ensure the event with the given title exists
+    @Then("^the event \"([^\"]*)\" should be successfully created and deleted afterwards$")
+    public void theEventShouldBeSuccessfullyCreatedAndDeletedAfterwards(String title) {
+        Assert.assertTrue(At(HomePage.class).isEventDisplayed(title));
+        boolean isDeletedEvent = At(HomePage.class).deleteEvent(title);
+        Assert.assertTrue(isDeletedEvent);
     }
-
-    @When("^the user selects the delete button for (.+)$")
-    public void theUserSelectsTheDeleteButtonFor(String title) {
-
-    }
-
-    @When("^clicks confirm deletion$")
-    public void clicksConfirmDeletion() {
-
-    }
-
-    @Then("(.+) should be successfully deleted$")
-    public void shouldBeSuccessfullyDeleted(String title) {
-
-    }
-
     @When("^clicks on the register button without entering a title$")
     public void clicksOnTheRegisterButtonWithoutEnteringATitle() {
-        // Implementation code
+        At(HomePage.class).clickSubmitButton();
     }
 
     @Then("^a mandatory title error message should be displayed$")
     public void aMandatoryTitleErrorMessageShouldBeDisplayed() {
-        // Implementation code
+        Assert.assertTrue(At(HomePage.class).isEmptyTitleErrorMessageDisplayed());
     }
 
-    @When("^the user edits the event \"([^\"]*)\"$")
-    public void theUserEditsTheEvent(String title) {
-        // Implementation code
+    @Given("^an event with the title \"([^\"]*)\" exists$")
+    public void anEventWithTheTitleExists(String string) {
+        theUserClicksOnTheCreateEventButton();
+        inputsTheTitle(string);
+        clicksOnTheRegisterButton();
+        Assert.assertTrue(At(HomePage.class).isEventDisplayed(string));
     }
 
-    @When("^changes the title to \"([^\"]*)\" and adds a description \"([^\"]*)\"$")
-    public void changesTheTitleToAndAddsADescription(String newTitle, String description) {
-        // Implementation code
+   @When("^the user edits the event title to \"([^\"]*)\"$")
+   public void theUserEditsTheEventTitleTo(String newTitle) {
+       At(HomePage.class).editEventTitle("Legacy Experience", newTitle);
+   }
+    @When("^description to \"([^\"]*)\"$")
+    public void descriptionTo(String newDescription) {
+        At(HomePage.class).editEventDescription(newDescription);
     }
-
-    @When("^clicks the save button$")
-    public void clicksTheSaveButton() {
-        // Implementation code
-    }
-
     @Then("^the event is successfully edited$")
     public void theEventIsSuccessfullyEdited() {
-        // Implementation code
+        Assert.assertTrue(At(HomePage.class).isEventTitleAndDescriptionEdited("Culto Hope Terca", "Best service of the week"));
+        boolean isDeletedEvent = At(HomePage.class).deleteEvent("Culto Hope Terca");
+        Assert.assertTrue(isDeletedEvent);
     }
 
-    @When("^erases the title$")
-    public void erasesTheTitle() {
-        // Implementation code
+    @And("clicks the save button")
+    public void clicksTheSaveButton() {
+        At(HomePage.class).clickSubmitButton();
     }
 
     @When("^the user searches for \"([^\"]*)\"$")
     public void theUserSearchesFor(String title) {
-        // Implementation code
+        At(HomePage.class).searchEvent(title);
     }
 
-    @Then("^the event \"([^\"]*)\" should be displayed$")
-    public void theEventShouldBeDisplayed(String title) {
-        // Implementation code
+    @Then("^the event should be displayed$")
+    public void theEventShouldBeDisplayed() {
+        Assert.assertTrue(At(HomePage.class).isEventDisplayed("Legacy Experience"));
     }
+
+    @And("the event should be deleted")
+    public void theEventShouldBeDeleted() {
+        At(HomePage.class).clickCreateEventButton();
+        At(HomePage.class).deleteEvent("Legacy Experience");
+
+    }
+
 
 
 

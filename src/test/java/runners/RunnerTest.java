@@ -7,11 +7,14 @@ import io.cucumber.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src//test//resources//features",
-        glue = "stepsDefinitions",
-        tags = "@passwordIcon",
+        plugin = {"pretty"},
+        features = "src/test/resources/features",
+        glue = {"stepsDefinitions"},
+        tags = "@createMultipleEvents",
         snippets = CucumberOptions.SnippetType.CAMELCASE,
+        monochrome = false,
         dryRun = false
+
 )
 public class RunnerTest {
 

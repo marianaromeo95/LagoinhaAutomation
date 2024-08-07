@@ -39,7 +39,7 @@ public class LoginSteps {
 
     @Then("^the system should throw invalid email/password error message$")
     public void theSystemShouldThrowInvalidEmailPasswordErrorMessage() {
-        // Code to verify that an invalid email/password error message is shown
+        At(LoginPage.class).login("jpbaterabsb@gmail.com", "12345678");
     }
 
     @When("^the user clicks the password visibility toggle icon$")
