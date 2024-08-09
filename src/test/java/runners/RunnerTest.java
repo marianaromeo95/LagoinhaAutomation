@@ -10,7 +10,7 @@ import io.cucumber.junit.Cucumber;
         plugin = {"pretty"},
         features = "src/test/resources/features",
         glue = {"stepsDefinitions"},
-        tags = "@eventSuccess",
+        tags = "@editEvent",
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         monochrome = false,
         dryRun = false
