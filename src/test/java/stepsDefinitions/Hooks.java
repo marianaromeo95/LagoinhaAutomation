@@ -1,6 +1,7 @@
 package stepsDefinitions;
 
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import pageObjects.LoginPage;
@@ -19,12 +20,14 @@ public class Hooks {
     @Before
     public void setUp2() throws Exception {
         accessSystem();
-        systemLogin("jpbaterabsb@gmail.com", "12345678");
+        //systemLogin("jpbaterabsb@gmail.com", "12345678");
     }
 
     @After
     public void tearDown(Scenario scenario) {
         driver.quit();
     }
+
+
 
 }
